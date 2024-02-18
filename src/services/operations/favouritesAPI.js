@@ -1,3 +1,4 @@
+import { toast } from "react-toastify"
 import { apiConnector } from "../apiConnector"
 import { favouritesEndpoints} from "../apis"
 
@@ -28,9 +29,11 @@ export function addToFavourites(data , token ){
                 throw new Error(response.data.message)
             }
 
+            toast.success("Added to Favourites")
 
         } catch(error){
             console.log("ADDTOFAVOURITES API ERROR............", error)
+            toast.error("Try again ")
         }
     }
 }
@@ -52,8 +55,10 @@ export function deleteFromFavourites(dataId , token){
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
+            toast.success("Deleted from Favourites")
         } catch(error){
             console.log("DELETEFROMFAVOURITES API ERROR............", error)
+            toast.error("Error in deletion")
         }
     }
 }
@@ -61,6 +66,7 @@ export function deleteFromFavourites(dataId , token){
 export function getAllFavourites(token){
     console.log("calling backend")
     console.log(token)
+    let result=[]
     return async()=>{
         try{
             const response=await apiConnector(
@@ -70,7 +76,6 @@ export function getAllFavourites(token){
                 {
                     Authentication : `Bearer ${token}`
                 }
-
             )
 
             console.log("GET ALL FAVOURITES API RESPONSE............", response)
@@ -78,12 +83,12 @@ export function getAllFavourites(token){
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
-            return response?.data?.data
+            result= response?.data?.data
         } catch(error){
             console.log("GETALLFAVOURITES API ERROR............", error)
         }
-
-        return null
+        console.log(result)
+        return result
         
     }
 }

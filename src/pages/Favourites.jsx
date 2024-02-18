@@ -3,6 +3,7 @@ import Menu from "../components/Menu"
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllFavourites } from '../services/operations/favouritesAPI'
 import { logout } from '../services/operations/authAPI'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -10,7 +11,7 @@ const Favourites = () => {
   const dispatch=useDispatch()
   const [data,setData]=useState(null)
   const { token } =useSelector((state)=>state.user)
-
+  const navigate=useNavigate()
 
   const getAllData=async()=>{
     console.log(token)
@@ -20,7 +21,7 @@ const Favourites = () => {
   }
 
   const logoutHandler=async()=>{
-    dispatch(logout)
+    dispatch(logout(navigate))
   }
 
 
@@ -33,7 +34,7 @@ const Favourites = () => {
 
   }
   return (
-    <div className='w-full'>
+    <div className='w-full '>
       <Menu/>
 
       {/* <div>
@@ -53,7 +54,7 @@ const Favourites = () => {
       </div> */}
 
 
-      <button onClick={logoutHandler} className='px-5 py-3 rounded-md '>Log Out</button>
+      <button onClick={logoutHandler} className='px-5 py-3 rounded-md bg-blue-300 text-black mt-20'>Log Out</button>
     </div>
   )
 }

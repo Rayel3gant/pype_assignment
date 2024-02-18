@@ -29,6 +29,7 @@ const Search = () => {
   const [addStatus,setAddStatus]=useState(false)
   const [location,setLocation]=useState("")
   const getLocation=()=>{
+    setLoading(true)
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(findLocation);
     } else {
@@ -128,7 +129,9 @@ const Search = () => {
         <div>
           {
             loading ? (
-              <Loader/>
+              <div className='w-full h-screen flex justify-center items-center'>
+                <Loader/>
+              </div>
             ) : (
               <div className='w-11/12 lg:w-3/4  mx-auto mt-8 '>
           <div className='w-full  flex flex-col items-end  lg:flex-row lg:justify-between gap-y-4 '>
@@ -152,11 +155,11 @@ const Search = () => {
                       <div>{weatherData?.current?.condition?.text} in {weatherData?.location?.name}</div>
                       <div>Temperature : 
                         {
-                          (temperatureMode===1) ? (<span>{weatherData?.current?.temp_c}</span>) : (<span>{weatherData?.current?.temp_f}</span>)
+                          (temperatureMode===1) ? (<span>{weatherData?.current?.temp_c} &#8451;</span>) : (<span>{weatherData?.current?.temp_f} &#8457;</span>)
                         } 
                       </div>
-                      <div>Humidity : {weatherData?.current?.humidity}</div>
-                      <div>Pressure : {weatherData?.current?.pressure_in}</div>
+                      <div>Humidity : {weatherData?.current?.humidity} g/m<sup>3</sup></div>
+                      <div>Pressure : {weatherData?.current?.pressure_mb} hPa</div>
                     </div>
                   </div>
 

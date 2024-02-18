@@ -1,3 +1,4 @@
+import { toast } from "react-toastify"
 import { setToken, setUser } from "../../redux/slices/userSlice"
 import { apiConnector } from "../apiConnector"
 import { authEndpoints } from "../apis"
@@ -26,12 +27,14 @@ export function signup(username,email,password ,navigate){
             }
 
             console.log("sign up successful")
+            toast.success("Sign Up Successful")
 
             navigate("/login")
 
 
         } catch(error){
             console.log("SIGNUP API ERROR............", error)
+            toast.error("Sign Up error")
             navigate("/signup")
         }
     }
@@ -61,6 +64,8 @@ export function login(email , password , navigate){
             localStorage.setItem("user", JSON.stringify(response.data.user))
 
             console.log("log in successful")
+            toast.success("Log in successful")
+            toast.error("Log in error")
 
             navigate("/search")
 
@@ -78,6 +83,7 @@ export function logout(navigate) {
       localStorage.removeItem("token")
       localStorage.removeItem("user")
       console.log("user logged out")
+      toast.warning("User Logged out")
       navigate("/")
     }
   }
